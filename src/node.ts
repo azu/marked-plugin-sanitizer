@@ -5,7 +5,7 @@ import { markedPluginSanitizerOptions } from "./options";
 import { createSanitizeRenderer } from "./SanitizeRender";
 
 /**
- * Create Markdown processor
+ * Create Sanitizer plugin
  * @param options
  */
 export const createSanitizer = (options: markedPluginSanitizerOptions = {}) => {
@@ -17,7 +17,10 @@ export const createSanitizer = (options: markedPluginSanitizerOptions = {}) => {
     const sanitize = (html: string) => {
         return DOMPurify.sanitize(html, dompurifyOptions);
     };
-    const renderer = createSanitizeRenderer(sanitize);
+    const renderer = createSanitizeRenderer({
+        markedOptions: options.marked,
+        sanitize,
+    });
     return {
         renderer,
     };

@@ -1,8 +1,14 @@
 const { Renderer } = require("marked");
 
-export const createSanitizeRenderer = (sanitize: (html: string) => string) => {
-    const defaultRenderer: any = new Renderer();
-    console.log("defaultRenderer", defaultRenderer);
+// Wrap default renderer with sanitizer
+export const createSanitizeRenderer = ({
+    markedOptions,
+    sanitize,
+}: {
+    markedOptions?: {};
+    sanitize: (html: string) => string;
+}) => {
+    const defaultRenderer = new Renderer(markedOptions);
     const rendererKeys = [
         "code",
         "blockquote",
@@ -27,6 +33,7 @@ export const createSanitizeRenderer = (sanitize: (html: string) => string) => {
     ] as const;
     type KeyTypes = typeof rendererKeys[number];
     type RendererHandlers = { [index in KeyTypes]: (...args: any[]) => string };
+    // Wrap default renderer with sanitize
     const renderer: Partial<RendererHandlers> = {};
     rendererKeys.forEach((key) => {
         renderer[key] = (...args: any[]) => {

@@ -1,4 +1,6 @@
 export type markedPluginSanitizerOptions = {
+    // TODO: types
+    marked?: {};
     dompurify?: {
         ADD_ATTR?: string[];
         ADD_TAGS?: string[];

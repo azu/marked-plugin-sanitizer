@@ -1,5 +1,6 @@
 import assert = require("assert");
 import { createSanitizer } from "../src/node";
+
 const marked = require("marked");
 
 describe("marked-plugin-sanitizer", function () {
@@ -32,7 +33,13 @@ This is [XSS](javascript:alert)`);
         );
     });
     it("should accept marked option", () => {
-        marked.use(createSanitizer());
+        marked.use(
+            createSanitizer({
+                marked: {
+                    headerIds: false,
+                },
+            })
+        );
         const html = marked(`# Header
 
 This is [CommonMark](https://commonmark.org/) text.
@@ -47,6 +54,9 @@ This is [CommonMark](https://commonmark.org/) text.
     it("should accept DOMPurify option", () => {
         marked.use(
             createSanitizer({
+                marked: {
+                    headerIds: false,
+                },
                 dompurify: {
                     ADD_TAGS: ["iframe"],
                 },
