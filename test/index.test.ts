@@ -52,11 +52,11 @@ This is [CommonMark](https://commonmark.org/) text.
         );
     });
     it("should accept DOMPurify option", () => {
+        marked.setOptions({
+            headerIds: false,
+        });
         marked.use(
             createSanitizer({
-                marked: {
-                    headerIds: false,
-                },
                 dompurify: {
                     ADD_TAGS: ["iframe"],
                 },
