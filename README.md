@@ -12,6 +12,7 @@ Install with [npm](https://www.npmjs.com/):
 
 ```js
 const marked = require("marked");
+const { createSanitizer } = require("marked-plugin-sanitizer");
 marked.use(createSanitizer());
 const html = marked(`<script>alert(1)</script>
 <iframe src="https://example.com"></iframe>
@@ -34,6 +35,7 @@ An example for options:
 
 ```js
 const marked = require("marked");
+const { createSanitizer } = require("marked-plugin-sanitizer");
 marked.setOptions({
     headerIds: false,
 });
