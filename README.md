@@ -10,7 +10,7 @@ Install with [npm](https://www.npmjs.com/):
 
 ## Usage
 
-``js
+```js
 const marked = require("marked");
 marked.use(createSanitizer());
 const html = marked(`<script>alert(1)</script>
