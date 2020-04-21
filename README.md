@@ -24,7 +24,7 @@ console.log(html)
 <p>This is <a>XSS</a></p>
 
 */
-``
+```
 
 ### Options: 
 
