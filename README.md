@@ -1,6 +1,6 @@
 # marked-plugin-sanitizer
 
-marked plugin to sanitize HTML
+[marked](https://github.com/markedjs/marked) plugin to sanitize HTML
 
 ## Install
 
@@ -10,7 +10,53 @@ Install with [npm](https://www.npmjs.com/):
 
 ## Usage
 
-- [ ] Write usage instructions
+``js
+const marked = require("marked");
+marked.use(createSanitizer());
+const html = marked(`<script>alert(1)</script>
+<iframe src="https://example.com"></iframe>
+
+This is [XSS](javascript:alert)`);
+
+console.log(html)
+/*
+
+<p>This is <a>XSS</a></p>
+
+*/
+``
+
+### Options: 
+
+- `dompurify`: See [DOMPurify](https://github.com/cure53/DOMPurify)'s options
+
+An example for options:
+
+```js
+const marked = require("marked");
+marked.setOptions({
+    headerIds: false,
+});
+marked.use(
+    createSanitizer({
+        dompurify: {
+            ADD_TAGS: ["iframe"],
+        },
+    })
+);
+const html = marked(`# Header
+
+<iframe src="https://example.com"></iframe>
+This is [CommonMark](https://commonmark.org/) text.
+`);
+assert.strictEqual(
+    html,
+    `<h1>Header</h1>
+<iframe src="https://example.com"></iframe>
+This is [CommonMark](https://commonmark.org/) text.
+`
+);
+```
 
 ## Changelog
 
